@@ -69,8 +69,12 @@ module.exports = function(grunt) {
         sourceMapHelper.add(banner);
       }
 
+      var srcs = f.src || f.dynSrc;
       // Concat banner + specified files + footer.
-      var src = banner + f.src.filter(function(filepath) {
+      var src = banner + srcs.filter(function(filepath) {
+        if (typeof filepath === "function") {
+          filepath = filepath();
+        }
         // Warn on and remove invalid source files (if nonull was set).
         if (!grunt.file.exists(filepath)) {
           grunt.log.warn('Source file "' + filepath + '" not found.');
@@ -96,7 +100,7 @@ module.exports = function(grunt) {
         // Add the lines of this file to our map.
         if (sourceMapHelper) {
           src = sourceMapHelper.addlines(src, filepath);
-          if (i < f.src.length - 1) {
+          if (i < srcs.length - 1) {
             sourceMapHelper.add(options.separator);
           }
         }
