@@ -62,6 +62,15 @@ module.exports = function(grunt) {
 
     // Iterate over all src-dest file pairs.
     this.files.forEach(function(f) {
+      var skip = f.skip;
+      if (typeof skip === "function") {
+        skip = skip();
+      }
+      if (skip) {
+        grunt.log.warn('Concat skipped.');
+        return;
+      }
+
       // Initialize source map objects.
       var sourceMapHelper;
       if (sourceMap) {
