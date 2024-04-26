@@ -1,12 +1,11 @@
 {
-  "name": "grunt-contrib-concat",
+  "name": "@ionweb/grunt-contrib-concat",
   "description": "Concatenate files.",
   "version": "2.0.0-ion2",
   "author": {
     "name": "Grunt Team",
     "url": "http://gruntjs.com/"
   },
-  "repository": "gruntjs/grunt-contrib-concat",
   "license": "MIT",
   "engines": {
     "node": ">=0.12.0"
