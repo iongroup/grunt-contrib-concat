@@ -8,6 +8,16 @@
 
 'use strict';
 
+const prettyPrint = num => {
+  if (num < 1024) {
+    return `${num} bytes`;
+  }
+  if (num < 1024 * 1024) {
+    return `${(num / 1024).toFixed(1)} kB`;
+  }
+  return `${(num / (1024 * 1024)).toFixed(1)} MB`;
+}
+
 module.exports = function(grunt) {
 
   // Internal lib.
@@ -25,7 +35,8 @@ module.exports = function(grunt) {
       process: false,
       sourceMap: false,
       sourceMapName: undefined,
-      sourceMapStyle: 'embed'
+      sourceMapStyle: 'embed',
+      verboseReport: false
     });
 
     // Normalize boolean options that accept options objects.
@@ -114,6 +125,9 @@ module.exports = function(grunt) {
           if (i < srcs.length - 1) {
             sourceMapHelper.add(options.separator);
           }
+        }
+        if (options.verboseReport) {
+          grunt.log.writeln(`  bundling ${chalk.cyan(filepath)}, size ${prettyPrint(src.length)}`);
         }
         return src;
       }).join(options.separator) + footer;
